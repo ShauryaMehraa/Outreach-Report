@@ -1,0 +1,103 @@
+{
+  "conclusion": "Meeting Conclusion:\n\nThe meeting concluded with a comprehensive discussion on the challenges faced by the farmer in cultivating crops, primarily focusing on soil enrichment, crop health, soil fertility, government support, input costs, irrigation, and pest management.\n\nKey takeaways from the meeting included the importance of soil testing, diversifying crop varieties, practicing organic farming, maintaining records, seeking professional advice, purchasing quality seeds from reputable dealers, and adopting integrated pest management (IPM) practices.\n\nAdditionally, the farmer was encouraged to form a cooperative to negotiate better prices and avail of government schemes. Suggestions were also made to use efficient irrigation systems such as drip irrigation and micro-irrigation, and to implement rainwater harvesting structures for water storage during dry periods.\n\nThe farmer was advised to uproot and burn affected plants to prevent the spread of disease, and to rotate crops to break the pest life cycle and use resistant varieties. The meeting concluded with a call to action for the farmer to implement these strategies for improved crop health and increased productivity. The next steps will involve the farmer visiting our city to collect more information and potentially forming a cooperative.",
+  "metadata": {
+    "date": null,
+    "day": "Is",
+    "village": "Dasa",
+    "sarpanch_name": null,
+    "panchayat": null,
+    "block": null,
+    "phone_number": null,
+    "event_location": null,
+    "district": "is also called a government or civil",
+    "farmers_attended_total": null,
+    "coordinator_name": null,
+    "reporting_manager_name": null,
+    "female_farmers_count": 0,
+    "male_farmers_count": null,
+    "event_start_time": null,
+    "event_end_time": "15:00"
+  },
+  "narration": {
+    "summary": "The meeting discussed the lack of use of bagara fertilizer in the area, leading to insufficient crop growth. A proposal was made to organize a meeting when balluvar seeds can be distributed in the city, and farmers can be invited to attend. It was suggested that all necessary information should be provided to farmers to ensure proper farming practices.\n\nIt was also noted that there is a need for soil testing and proper farming advice to improve crop yields. The issue of crop diseases was also raised, with the need for proper diagnosis and treatment discussed. No clear decisions were made regarding specific crops or diseases, but the importance of proper farming practices and timely interventions was emphasized.",
+    "narration": "In the district, the use of bagara is not prevalent, and as a result, the soil is not sufficiently enriched. This issue was raised during a meeting, and it was suggested that farmers should visit our city to collect proper information. It was emphasized that proper soil testing is necessary before sowing crops.\n\nThe farmer expressed concern about the color of the crops, and it was observed that the leaves had turned yellow, indicating a possible disease. It was suggested that the affected plants should be uprooted and burned to prevent the spread of the disease. The farmer also mentioned that all the seeds in his stock were of the same variety, and proper diversification was required for better crop health.\n\nThe farmer further expressed concern about the dwindling soil fertility and the need for organic farming practices. It was advised to incorporate green manure and crop rotation for soil health improvement. The farmer also raised concerns about the lack of government support in the form of subsidies and low prices for their produce.\n\nIt was suggested that the farmer should form a cooperative to negotiate better prices and avail of government schemes. The farmer was also advised to keep records of his crops and expenses for future reference and to seek professional advice when needed.\n\nThe farmer also expressed concern about the increasing cost of inputs and the need for affordable and quality seeds. It was advised to purchase seeds from reputable dealers and to avoid buying seeds from unauthorized sources. The farmer was also advised to maintain a proper record of his seeds and to test them before sowing.\n\nThe farmer also raised concerns about the lack of irrigation facilities and the unreliable monsoon. It was suggested to use drip irrigation and micro-irrigation systems for efficient water use. The farmer was also advised to use rainwater harvesting structures to store water for dry periods.\n\nThe farmer also expressed concern about the increasing number of pests and diseases affecting his crops. It was advised to use integrated pest management (IPM) practices, including the use of natural predators and biological control agents, to manage pests. The farmer was also advised to rotate crops to break the pest life cycle and to use resistant varieties of crops.\n\nIn conclusion, the farmer was advised to diversify his crops, practice organic farming, maintain proper records, seek professional advice, use quality seeds, practice IPM, and use efficient irrigation systems. The farmer was also advised to form a cooperative to negotiate better prices and avail of government schemes. The farmer was also advised to use rainwater harvesting structures and to manage pests using IPM practices."
+  },
+  "terminology": [
+    {
+      "Crop": "",
+      "Local Name": "बग़ारा",
+      "Standard Name": "Bagrada Bug",
+      "Scientific Name": "Bagrada hilaris",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "लुद्ध",
+      "Standard Name": "Rust",
+      "Scientific Name": "Puccinia spp.",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "जैमानो द्वाई",
+      "Standard Name": "Jamuna Blight",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "दंगराज बच्चे लाइट",
+      "Standard Name": "Dangaraj Baby Corn Light",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "गड़ी मुश्किलां",
+      "Standard Name": "Gadhi Problem",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "फैंड दे साल",
+      "Standard Name": "Fallow Year",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "अपनी माती ना रेट देंगे",
+      "Standard Name": "Soil Retention",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "लेबर पहले बहुत ज़्यादा कट चुकी है",
+      "Standard Name": "Leaflet Severely Cut",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "नार जीता बाजी",
+      "Standard Name": "Nar Jita Baazi",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "मड़ी मसलावास",
+      "Standard Name": "Madar Masalawaas",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    }
+  ],
+  "farmer_questions": [],
+  "challenges": [],
+  "participants": {
+    "total_count": 0,
+    "farmers": []
+  }
+}

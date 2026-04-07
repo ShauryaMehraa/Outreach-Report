@@ -1,0 +1,74 @@
+{
+  "terminology": [
+    {
+      "Crop": "",
+      "Local Name": "बग़ारा",
+      "Standard Name": "Bagrada Bug",
+      "Scientific Name": "Bagrada hilaris",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "लुद्ध",
+      "Standard Name": "Rust",
+      "Scientific Name": "Puccinia spp.",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "जैमानो द्वाई",
+      "Standard Name": "Jamuna Blight",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "दंगराज बच्चे लाइट",
+      "Standard Name": "Dangaraj Baby Corn Light",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "गड़ी मुश्किलां",
+      "Standard Name": "Gadhi Problem",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "फैंड दे साल",
+      "Standard Name": "Fallow Year",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "अपनी माती ना रेट देंगे",
+      "Standard Name": "Soil Retention",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "लेबर पहले बहुत ज़्यादा कट चुकी है",
+      "Standard Name": "Leaflet Severely Cut",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "नार जीता बाजी",
+      "Standard Name": "Nar Jita Baazi",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "मड़ी मसलावास",
+      "Standard Name": "Madar Masalawaas",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    }
+  ]
+}

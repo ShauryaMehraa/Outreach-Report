@@ -1,0 +1,149 @@
+{
+  "conclusion": "Meeting Conclusion:\n\nThe meeting concluded with a comprehensive discussion on the challenges faced by the farmer, primarily focusing on government support, market and technology adoption, and soil health. The farmer's concerns regarding the disparity in government support and the high cost of goods were acknowledged, and suggestions were made to form a cooperative for better price negotiation and access to government schemes.\n\nThe farmer's concerns about the soil health, crop diversity, and the need for organic farming practices were addressed with recommendations for soil testing, green manure, crop rotation, and the use of organic farming methods. The farmer was also advised to maintain records of crops and expenses for future reference and to seek professional advice when needed.\n\nThe increasing cost of inputs, particularly seeds, was addressed by advising the farmer to purchase seeds from reputable dealers and to maintain a proper record of his seeds. The farmer was also advised to test seeds before sowing and to use integrated pest management (IPM) practices for managing pests.\n\nThe farmer's concerns about irrigation facilities and unreliable monsoon were addressed with suggestions for using drip irrigation and micro-irrigation systems for efficient water use and rainwater harvesting structures to store water for dry periods.\n\nIn summary, the meeting provided valuable insights and solutions to address the farmer's concerns, emphasizing the importance of diversifying crops, practicing organic farming, maintaining records, seeking professional advice, using quality seeds, practicing IPM, and using efficient irrigation systems. The farmer was also encouraged to form a cooperative to negotiate better prices and avail of government schemes. The next steps include the farmer visiting the city for further information and implementing the suggested practices on his farm.",
+  "metadata": {
+    "date": null,
+    "day": "Is",
+    "village": "Dasa",
+    "sarpanch_name": null,
+    "panchayat": null,
+    "block": null,
+    "phone_number": null,
+    "event_location": null,
+    "district": "is also called a government or civil",
+    "farmers_attended_total": null,
+    "coordinator_name": null,
+    "reporting_manager_name": null,
+    "female_farmers_count": 0,
+    "male_farmers_count": null,
+    "event_start_time": null,
+    "event_end_time": null
+  },
+  "narration": {
+    "summary": "The meeting discussed the lack of use of bagara fertilizer in the area, leading to insufficient crop growth. A proposal was made to organize a meeting when balluvar seeds can be distributed in the city, and farmers can be invited to attend. It was suggested that all necessary information should be provided to farmers to ensure proper farming practices.\n\nIt was also noted that there is a need for soil testing and proper farming advice to improve crop yields. The issue of crop diseases was also raised, with the need for proper diagnosis and treatment discussed. No clear decisions were made regarding specific crops or diseases, but the importance of proper farming practices and timely interventions was emphasized.",
+    "narration": "In the district, the use of bagara is not prevalent, and as a result, the soil is not sufficiently enriched. This issue was raised during a meeting, and it was suggested that farmers should visit our city to collect proper information. It was emphasized that proper soil testing is necessary before sowing crops.\n\nThe farmer expressed concern about the color of the crops, and it was observed that the leaves had turned yellow, indicating a possible disease. It was suggested that the affected plants should be uprooted and burned to prevent the spread of the disease. The farmer also mentioned that all the seeds in his stock were of the same variety, and proper diversification was required for better crop health.\n\nThe farmer further expressed concern about the dwindling soil fertility and the need for organic farming practices. It was advised to incorporate green manure and crop rotation for soil health improvement. The farmer also raised concerns about the lack of government support in the form of subsidies and low prices for their produce.\n\nIt was suggested that the farmer should form a cooperative to negotiate better prices and avail of government schemes. The farmer was also advised to keep records of his crops and expenses for future reference and to seek professional advice when needed.\n\nThe farmer also expressed concern about the increasing cost of inputs and the need for affordable and quality seeds. It was advised to purchase seeds from reputable dealers and to avoid buying seeds from unauthorized sources. The farmer was also advised to maintain a proper record of his seeds and to test them before sowing.\n\nThe farmer also raised concerns about the lack of irrigation facilities and the unreliable monsoon. It was suggested to use drip irrigation and micro-irrigation systems for efficient water use. The farmer was also advised to use rainwater harvesting structures to store water for dry periods.\n\nThe farmer also expressed concern about the increasing number of pests and diseases affecting his crops. It was advised to use integrated pest management (IPM) practices, including the use of natural predators and biological control agents, to manage pests. The farmer was also advised to rotate crops to break the pest life cycle and to use resistant varieties of crops.\n\nIn conclusion, the farmer was advised to diversify his crops, practice organic farming, maintain proper records, seek professional advice, use quality seeds, practice IPM, and use efficient irrigation systems. The farmer was also advised to form a cooperative to negotiate better prices and avail of government schemes. The farmer was also advised to use rainwater harvesting structures and to manage pests using IPM practices."
+  },
+  "terminology": [
+    {
+      "Crop": "",
+      "Local Name": "बग़ारा",
+      "Standard Name": "Bagrada Bug",
+      "Scientific Name": "Bagrada hilaris",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "लुद्ध",
+      "Standard Name": "Rust",
+      "Scientific Name": "Puccinia spp.",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "जैमानो द्वाई",
+      "Standard Name": "Jamuna Blight",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "दंगराज बच्चे लाइट",
+      "Standard Name": "Dangaraj Baby Corn Light",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "गड़ी मुश्किलां",
+      "Standard Name": "Gadhi Problem",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "फैंड दे साल",
+      "Standard Name": "Fallow Year",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "अपनी माती ना रेट देंगे",
+      "Standard Name": "Soil Retention",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "लेबर पहले बहुत ज़्यादा कट चुकी है",
+      "Standard Name": "Leaflet Severely Cut",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "नार जीता बाजी",
+      "Standard Name": "Nar Jita Baazi",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    },
+    {
+      "Crop": "",
+      "Local Name": "मड़ी मसलावास",
+      "Standard Name": "Madar Masalawaas",
+      "Scientific Name": "",
+      "Language": "Punjabi"
+    }
+  ],
+  "farmer_questions": [
+    "Why are we getting less than 500 rupees for bhaji?",
+    "Why is there not too much cut?",
+    "Why are they increasing the rate for the goods ten times?",
+    "Why are they not living up to their promises?",
+    "Why is the government rate for the goods being given to the private ones?",
+    "Why are the private rooms very dirty and require extra fees to clean?",
+    "Why are the government rate and the government-acquired private malls a problem for the poor?"
+  ],
+  "challenges": [
+    {
+      "category": "Government Support Issues",
+      "challenges": [
+        "Government rate for the goods being given to the private ones",
+        "Government officials ruling as the private daughter mostly",
+        "Government trying to do things in a way that doesn't seem right"
+      ]
+    },
+    {
+      "category": "Market and Technology Adoption",
+      "challenges": [
+        "Rate for the goods is being increased ten times",
+        "Government rate and the government-acquired private malls a problem for the poor"
+      ]
+    },
+    {
+      "category": "Others",
+      "challenges": [
+        "Not too much cut",
+        "Marriage of Anithani is a battle",
+        "Lack of proper testing and quality control measures",
+        "Shop is open till 10 at night",
+        "Not living up to their promises",
+        "Private rooms very dirty and require extra fees to clean"
+      ]
+    }
+  ],
+  "participants": {
+    "total_count": 1,
+    "farmers": [
+      {
+        "ordinal": "1",
+        "name": "Jiri Junibusti Kevia",
+        "phone_number": null,
+        "total_land_acres": 0.0,
+        "qualification": null,
+        "animals": null,
+        "main_crops": null,
+        "notes": "bring the ball"
+      }
+    ]
+  }
+}

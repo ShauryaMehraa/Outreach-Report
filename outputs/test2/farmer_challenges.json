@@ -1,0 +1,30 @@
+{
+  "challenges": [
+    {
+      "category": "Government Support Issues",
+      "challenges": [
+        "Government rate for the goods being given to the private ones",
+        "Government officials ruling as the private daughter mostly",
+        "Government trying to do things in a way that doesn't seem right"
+      ]
+    },
+    {
+      "category": "Market and Technology Adoption",
+      "challenges": [
+        "Rate for the goods is being increased ten times",
+        "Government rate and the government-acquired private malls a problem for the poor"
+      ]
+    },
+    {
+      "category": "Others",
+      "challenges": [
+        "Not too much cut",
+        "Marriage of Anithani is a battle",
+        "Lack of proper testing and quality control measures",
+        "Shop is open till 10 at night",
+        "Not living up to their promises",
+        "Private rooms very dirty and require extra fees to clean"
+      ]
+    }
+  ]
+}
