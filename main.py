@@ -6,7 +6,7 @@ Single entry point for the full outreach report pipeline:
   audio files (directory)
       → combine & normalize    [pipeline/ingestion/audio_utils.py]
       → speaker diarization    [pipeline/diarization/pyannote_diarizer.py]
-      → ASR transcription      [pipeline/asr/indic_conformer.py]
+    → ASR transcription      [pipeline/asr/indic_conformer.py]
       → structured transcript  [pipeline/transcript/builder.py]
       → translation            [pipeline/translation/sarvam_translate.py]
       → extraction & insights  [pipeline/extraction/*]
@@ -44,18 +44,18 @@ logging.basicConfig(
 )
 log = logging.getLogger("pipeline")
 
-# FLORES-200 short-code → (IndicTrans2 lang tag, ASR lang tag)
+# FLORES-200 short-code → (IndicTrans2 lang tag, Whisper language name)
 LANGUAGE_MAP = {
-    "pa": ("pan_Guru", "pa"),
-    "hi": ("hin_Deva", "hi"),
-    "ta": ("tam_Taml", "ta"),
-    "te": ("tel_Telu", "te"),
-    "mr": ("mar_Deva", "mr"),
-    "kn": ("kan_Knda", "kn"),
-    "gu": ("guj_Gujr", "gu"),
-    "bn": ("ben_Beng", "bn"),
-    "or": ("ory_Orya", "or"),
-    "ml": ("mal_Mlym", "ml"),
+    "pa": ("pan_Guru", "Punjabi"),
+    "hi": ("hin_Deva", "Hindi"),
+    "ta": ("tam_Taml", "Tamil"),
+    "te": ("tel_Telu", "Telugu"),
+    "mr": ("mar_Deva", "Marathi"),
+    "kn": ("kan_Knda", "Kannada"),
+    "gu": ("guj_Gujr", "Gujarati"),
+    "bn": ("ben_Beng", "Bengali"),
+    "or": ("ory_Orya", "Odia"),
+    "ml": ("mal_Mlym", "Malayalam"),
 }
 
 
@@ -74,7 +74,7 @@ def run_asr_diarization(
     language_asr: str,
     device: str,
 ) -> list[dict]:
-    from pipeline.asr.indic_conformer import load_asr_model
+    from pipeline.asr.whisper_asr import load_asr_model
     from pipeline.diarization.pyannote_diarizer import diarize, load_diarization_pipeline
     from pipeline.transcript.builder import build_transcript
 

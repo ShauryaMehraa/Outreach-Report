@@ -1,7 +1,6 @@
 """
 Merges diarization speaker turns with ASR output into the shared
 List[Dict] transcript schema:
-
   {
     "speaker_id":    str,
     "start":         float,
@@ -10,14 +9,10 @@ List[Dict] transcript schema:
     "translated_text": str     ← filled later by translation stage
   }
 """
-
 import json
-
+import numpy as np
+import soundfile as sf
 import torch
-import torchaudio
-
-from pipeline.asr.indic_conformer import transcribe_chunk
-
 
 # =============================================================================
 # AUDIO HELPERS
@@ -25,19 +20,23 @@ from pipeline.asr.indic_conformer import transcribe_chunk
 
 def load_audio(path: str, target_sr: int = 16000, device: str = "cpu") -> torch.Tensor:
     """Load audio file to a (1, samples) tensor on the specified device."""
-    wav, sr = torchaudio.load(path)
-    wav = torch.mean(wav, dim=0, keepdim=True)  # stereo → mono
+    wav, sr = sf.read(path, dtype="float32")
+    if wav.ndim > 1:
+        wav = wav.mean(axis=1)  # stereo → mono
     if sr != target_sr:
-        resampler = torchaudio.transforms.Resample(orig_freq=sr, new_freq=target_sr)
-        wav = resampler(wav)
-    return wav.to(device)
+        import scipy.signal
+        num_samples = int(len(wav) * target_sr / sr)
+        wav = scipy.signal.resample(wav, num_samples)
+    tensor = torch.tensor(wav).unsqueeze(0)  # (1, samples)
+    return tensor.to(device)
 
 
 def extract_chunk(
     wav: torch.Tensor, start: float, end: float, sr: int = 16000
-) -> torch.Tensor:
-    """Slice a waveform tensor between start and end seconds."""
-    return wav[:, int(start * sr) : int(end * sr)]
+) -> np.ndarray:
+    """Slice a waveform tensor between start and end seconds, return numpy array."""
+    chunk = wav[:, int(start * sr) : int(end * sr)]
+    return chunk.squeeze(0).cpu().numpy()
 
 
 # =============================================================================
@@ -50,12 +49,14 @@ def build_transcript(
     asr_model,
     language: str,
     device: str,
-    min_duration: float = 0.5,
+    min_duration: float = 1.5,
 ) -> list[dict]:
     """
     For each diarization turn, extract the audio chunk, run ASR,
     and return the structured transcript list.
     """
+    from pipeline.asr.whisper_asr import transcribe_segment
+
     wav = load_audio(audio_path, device=device)
     transcript = []
 
@@ -67,7 +68,13 @@ def build_transcript(
         print(f"  [{i+1}/{len(turns)}] {speaker} | {start:.2f}s → {end:.2f}s ({duration:.2f}s)")
 
         chunk = extract_chunk(wav, start, end)
-        text  = transcribe_chunk(asr_model, chunk, language, device)
+        text = transcribe_segment(
+            asr_model,
+            chunk,
+            sample_rate=16000,
+            language=language,
+            device=device,
+        )
 
         if text:
             transcript.append({
@@ -75,7 +82,7 @@ def build_transcript(
                 "start":           round(start, 3),
                 "end":             round(end, 3),
                 "original_text":   text,
-                "translated_text": "",       # filled by translation stage
+                "translated_text": "",
             })
 
     return transcript

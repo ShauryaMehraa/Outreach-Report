@@ -1,5 +1,5 @@
 """
-Loads Ministral 14B once and exposes shared inference + JSON parsing helpers.
+Loads Ministral 3B once and exposes shared inference + JSON parsing helpers.
 All extractor/generator classes inherit from this.
 """
 
@@ -8,11 +8,12 @@ import logging
 import re
 from typing import Dict, List, Optional
 
+import os
 import torch
 from rapidfuzz import fuzz
-from transformers import Mistral3ForConditionalGeneration, MistralCommonBackend
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
-MODEL_ID = "mistralai/Ministral-3-14B-Instruct-2512"
+MODEL_ID = "/models/huggingface/models--mistralai--Mistral-7B-Instruct-v0.3/snapshots/c170c708c41dac9275d15a8fff4eca08d52bab71"
 log = logging.getLogger(__name__)
 
 
@@ -22,10 +23,12 @@ class BaseLLM:
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         log.info(f"Loading model on {self.device}...")
 
-        self.tokenizer = MistralCommonBackend.from_pretrained(MODEL_ID)
-        self.model = Mistral3ForConditionalGeneration.from_pretrained(
+        token = os.getenv("HF_TOKEN")
+        self.tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, token=token)
+        self.model = AutoModelForCausalLM.from_pretrained(
             MODEL_ID,
-            dtype=torch.bfloat16,
+            torch_dtype=torch.bfloat16,
+            token=token,
         ).to(self.device)
         self.model.eval()
         log.info("Model loaded successfully.")
@@ -44,6 +47,7 @@ class BaseLLM:
             messages,
             return_tensors="pt",
             return_dict=True,
+            add_generation_prompt=True,
         ).to(self.device)
 
         prompt_length = tokenized["input_ids"].shape[-1]
@@ -51,7 +55,8 @@ class BaseLLM:
         with torch.no_grad():
             output = self.model.generate(
                 **tokenized,
-                max_new_tokens=max_new_tokens
+                max_new_tokens=max_new_tokens,
+                pad_token_id=self.tokenizer.eos_token_id,
             )
 
         return self.tokenizer.decode(

@@ -6,6 +6,9 @@ into a single 16kHz mono WAV ready for ASR + diarization.
 import glob
 import os
 
+import numpy as np
+import soundfile as sf
+import scipy.signal
 import torch
 import torchaudio
 
@@ -15,10 +18,6 @@ import torchaudio
 # =============================================================================
 
 def get_sorted_files(directory: str) -> list[str]:
-    """
-    Discover all audio files in a directory and return them in pipeline order:
-    narration file(s) first, then all others sorted alphabetically.
-    """
     extensions = ["*.wav", "*.mp3", "*.m4a", "*.flac"]
     files = []
     for ext in extensions:
@@ -47,17 +46,18 @@ def get_sorted_files(directory: str) -> list[str]:
 # =============================================================================
 
 def load_and_normalize(path: str, target_sr: int = 16000) -> torch.Tensor:
-    """Load an audio file, convert to mono, and resample to target_sr."""
-    wav, sr = torchaudio.load(path)
+    """Load an audio file using pydub (supports mp3/m4a/flac), convert to mono, resample."""
+    from pydub import AudioSegment
+    import numpy as np
 
-    if wav.shape[0] > 1:
-        wav = torch.mean(wav, dim=0, keepdim=True)  # stereo → mono
+    audio = AudioSegment.from_file(path)
+    audio = audio.set_channels(1).set_frame_rate(target_sr).set_sample_width(2)
 
-    if sr != target_sr:
-        resampler = torchaudio.transforms.Resample(orig_freq=sr, new_freq=target_sr)
-        wav = resampler(wav)
+    samples = np.array(audio.get_array_of_samples(), dtype=np.float32)
+    samples /= 32768.0  # normalize to [-1, 1]
 
-    return wav  # shape: (1, samples)
+    wav = torch.tensor(samples).unsqueeze(0)  # shape: (1, samples)
+    return wav
 
 
 # =============================================================================
@@ -69,12 +69,6 @@ def combine_audio(
     output_path: str,
     target_sr: int = 16000,
 ) -> str:
-    """
-    Load all audio files from directory in order, concatenate them,
-    and save as a single 16kHz mono PCM WAV.
-
-    Returns the output_path for chaining.
-    """
     files = get_sorted_files(directory)
 
     chunks = []
@@ -89,12 +83,15 @@ def combine_audio(
     total_duration = combined.shape[1] / target_sr
     print(f"\nCombined duration: {total_duration:.2f}s")
 
-    torchaudio.save(
+    import soundfile as sf
+    sf.write(
         output_path,
-        combined,
-        sample_rate=target_sr,
-        encoding="PCM_S",
-        bits_per_sample=16,
+        combined.squeeze(0).numpy(),
+        target_sr,
+        subtype="PCM_16",
     )
+    if False:  # disabled torchaudio.save
+        import soundfile as sf
+    sf.write(output_path, combined.squeeze(0).numpy(), target_sr, subtype="PCM_16")
     print(f"Saved → {output_path}")
     return output_path
