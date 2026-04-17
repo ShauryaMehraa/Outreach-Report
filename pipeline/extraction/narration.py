@@ -40,7 +40,7 @@ class NarrationGenerator(BaseLLM):
     def _get_initial_transcript(self, entries: List[Dict], max_chars: int) -> str:
         lines, total = [], 0
         for e in entries:
-            text = e.get("original_text", "").strip()
+            text = (e.get("original_text") or e.get("translated_text") or e.get("text") or "").strip()
             if not text:
                 continue
             if total + len(text) > max_chars:
@@ -65,6 +65,12 @@ Read the following agricultural meeting transcript and write a concise summary
 in 2-3 sentences covering the main topic, key crops/diseases, and any decisions made.
 Return ONLY the summary, no headings.
 
+STRICT RULES:
+- Use only facts explicitly present in the transcript.
+- Do NOT invent farmer names, villages, crops, diseases, or recommendations.
+- Do NOT classify a place, person, organization, or app as a disease/crop unless the transcript explicitly says so.
+- If an entity is ambiguous, describe it neutrally rather than guessing.
+
 Transcript:
 {transcript}
 """,
@@ -87,6 +93,13 @@ Transcript:
 Write a detailed, professional 3-5 paragraph narration (no bullet points) covering
 all major topics, farmer problems, advice given, specific crops/diseases, and any
 recommendations. Return ONLY the narration, no headings.
+
+STRICT RULES:
+- Use only facts explicitly present in the transcript.
+- Do NOT invent farmer names, villages, crops, diseases, or recommendations.
+- Do NOT classify a place, person, organization, or app as a disease/crop unless the transcript explicitly says so.
+- If an entity is ambiguous, describe it neutrally rather than guessing.
+- If attendance counts or metadata are not explicitly stated, leave them unstated.
 
 Transcript:
 {transcript}

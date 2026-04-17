@@ -155,14 +155,19 @@ async def run_extraction(entries: list[dict], flores_lang: str) -> dict:
     # for ext in (insight_extractor, participant_extractor, summary_gen):
     #     _share_model(terminology_extractor, ext)
 
-    terminology_task = asyncio.ensure_future(terminology_extractor.extract(entries, flores_lang=flores_lang))
+    # Terminology disabled for Sarvam-based runs because this module expects true local-language original_text.
+    terminology = []
     narration        = narration_gen.generate(entries, max_chars=20000)
     insights         = await insight_extractor.extract(entries)
     participants     = await participant_extractor.extract(entries)
-    terminology      = await terminology_task
     # metadata from the narration text (English)
     # metadata = metadata_extractor.extract(narration["narration"], use_llm=True)
     metadata = await metadata_extractor.extract(entries, use_llm=True)
+
+    # Do not treat extracted participant profiles as actual attendance counts.
+    metadata["farmers_attended_total"] = None
+    metadata["female_farmers_count"] = None
+    metadata["male_farmers_count"] = None
 
     # final_summary = await summary_gen.generate(
     #     participants = participants,
