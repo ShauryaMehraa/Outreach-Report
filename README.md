@@ -13,7 +13,7 @@ Audio files (wav / mp3 / m4a / flac)
     └─► Combine & normalize
         └─► Speaker diarization       (pyannote.audio 3.1)
             └─► ASR transcription     (OpenAI Whisper large-v3)
-                └─► Translation       (sarvam-translate)
+                └─► Translation       (IndicTrans2 — free, Indic-optimised)
                     └─► Extraction    (LLM-based: insights, participants, terminology, metadata, conclusion)
                         └─► PDF Report (ReportLab)
 ```
@@ -22,12 +22,12 @@ Audio files (wav / mp3 / m4a / flac)
 
 ## What Changed from the Original
 
-The original pipeline used **IndicConformer** for ASR and **IndicTrans2** for translation. Both have been replaced:
+The original pipeline used **IndicConformer** for ASR and **IndicTrans2** for translation. ASR was replaced with Whisper; translation has now been restored to a modernised IndicTrans2 (free, no API key):
 
 | Component | Original | Current |
 |-----------|----------|---------|
 | ASR Model | `IndicConformer` (gated HuggingFace, complex setup) | `OpenAI Whisper large-v3` (pip install, no gated access) |
-| Translation | `IndicTrans2` | `sarvamai/sarvam-translate` (loaded locally via HuggingFace) |
+| Translation | `IndicTrans2` | `ai4bharat/indictrans2-indic-en-1B` (free, open-source, Indic-optimised) |
 | Audio loading | `torchaudio` (broken with PyTorch 2.9.1+) | `pydub` + `soundfile` |
 | Audio saving | `torchaudio.save` (torchcodec incompatible) | `soundfile.write` |
 | Diarization input | File path | Preloaded waveform tensor (bypasses torchcodec) |
@@ -39,7 +39,7 @@ The original pipeline used **IndicConformer** for ASR and **IndicTrans2** for tr
 
 - **Multi-speaker diarization** - identifies and separates speakers using `pyannote.audio 3.1`
 - **Whisper ASR** - transcribes speech in 10 Indian languages via `openai-whisper large-v3`
-- **Neural machine translation** - translates Indic-language transcripts to English using `sarvam-translate`
+- **Neural machine translation** - translates Indic-language transcripts to English using `ai4bharat/indictrans2-indic-en-1B` (free, open-source, purpose-built for Indian languages)
 - **LLM-based extraction** - concurrently extracts farmer questions, challenges, participant info, domain terminology, meeting metadata, and a narrative conclusion
 - **PDF report generation** - assembles all extracted content into a formatted report using ReportLab
 - **Resumable pipeline** - skip any completed stage (`--skip_combine`, `--skip_asr`, `--skip_translation`) to avoid re-running expensive steps
@@ -49,7 +49,7 @@ The original pipeline used **IndicConformer** for ASR and **IndicTrans2** for tr
 
 ## Supported Languages
 
-| Code | Language   | IndicTrans2 Tag | ASR Tag  |
+| Code | Language   | FLORES-200 Tag  | ASR Tag  |
 |------|------------|-----------------|----------|
 | `pa` | Punjabi    | `pan_Guru`      | `punjabi`|
 | `hi` | Hindi      | `hin_Deva`      | `hindi`  |
@@ -80,8 +80,8 @@ outreach-report-generator/
 │   ├── transcript/
 │   │   └── builder.py             # Builds & serializes structured transcripts
 │   ├── translation/
-│   │   ├── indictrans2.py         # Legacy IndicTrans2 translation (not used)
-│   │   └── sarvam_translate.py    # sarvam-translate translation (active)
+│   │   ├── indictrans2.py         # IndicTrans2 translation — active (free, Indic-optimised)
+│   │   └── sarvam_translate.py    # Legacy sarvam-translate (not used)
 │   ├── extraction/
 │   │   ├── base_llm.py            # Shared LLM model loader (Mistral-7B local path)
 │   │   ├── insights.py            # Farmer questions & challenges extractor
@@ -129,7 +129,7 @@ source .venv/bin/activate        # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
 # 4. Install additional dependencies not in requirements.txt
-pip install openai-whisper pydub soundfile scipy pyannote.audio indic-transliteration
+pip install openai-whisper pydub soundfile scipy pyannote.audio indic-transliteration IndicTransToolkit
 
 # 5. Set up environment variables
 cp .env.example .env
@@ -152,7 +152,7 @@ HF_TOKEN=hf_your_token_here
 
 You must also accept the model license at: [huggingface.co/pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)
 
-No Sarvam API key is needed — `sarvam-translate` is loaded locally via HuggingFace transformers.
+No API key is needed for translation — `ai4bharat/indictrans2-indic-en-1B` is a fully public, freely downloadable model.
 
 ---
 
@@ -221,7 +221,7 @@ All audio files in `--input_dir` are loaded using `pydub`, converted to 16kHz mo
 `openai-whisper large-v3` transcribes each speaker segment in the source Indic language, producing a structured raw transcript (`transcript_raw.json`). Speaker turns shorter than 1.5 seconds are skipped.
 
 ### Stage 4 — Translation
-`sarvamai/sarvam-translate` translates each transcript segment from the source Indic language to English in batches of 32, producing `transcript_translated.json`.
+`ai4bharat/indictrans2-indic-en-1B` translates each transcript segment from the source Indic language to English in batches of 32, producing `transcript_translated.json`. IndicTransToolkit provides script-aware pre/post processing for best quality; if not installed, the model still runs with the raw tokenizer.
 
 ### Stage 5 — Extraction (Concurrent)
 An LLM (`Mistral-7B-Instruct-v0.3`) processes the translated transcript to concurrently extract:
@@ -258,10 +258,11 @@ The pipeline loads models sequentially with explicit cleanup between stages:
 |-------|-------|-------------|
 | Diarization | pyannote 3.1 | ~1 GB |
 | ASR | Whisper large-v3 | ~5 GB |
-| Translation | sarvam-translate (bfloat16) | ~7 GB |
+| Translation | IndicTrans2 1B (bfloat16) | ~3 GB |
 | Extraction | Mistral-7B (bfloat16) | ~14 GB |
 
-A GPU with at least 16GB VRAM (e.g. NVIDIA A100, H100, H200) is recommended for smooth end-to-end runs.
+A GPU with at least 16 GB VRAM (e.g. NVIDIA A100, H100, H200) is recommended for smooth end-to-end runs.
+> **Note:** Switching from sarvam-translate (~7 GB) to IndicTrans2 (~3 GB) saves ~4 GB of VRAM during the translation stage.
 
 ---
 
@@ -271,7 +272,8 @@ A GPU with at least 16GB VRAM (e.g. NVIDIA A100, H100, H200) is recommended for 
 |---------|---------|
 | `torch` | Deep learning backend |
 | `openai-whisper` | ASR transcription |
-| `transformers` | sarvam-translate + Mistral extraction |
+| `transformers` | IndicTrans2 translation + Mistral extraction |
+| `IndicTransToolkit` | IndicTrans2 pre/post processing (Indic script normalisation) |
 | `pyannote-audio` | Speaker diarization |
 | `pydub` | Audio file loading (mp3, m4a, flac) |
 | `soundfile` | Audio file saving (wav) |

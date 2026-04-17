@@ -108,10 +108,10 @@ def run_translation(
     flores_lang: str,
     device:      str,
 ) -> list[dict]:
-    from pipeline.translation.sarvam_translate import SarvamTranslator
+    from pipeline.translation.indictrans2 import IndicTrans2Translator
 
     log.info("── STAGE 4: Translation (Indic → English) ──")
-    translator = SarvamTranslator(device=device)
+    translator = IndicTrans2Translator(device=device)
     translator.translate_transcript(entries, src_lang=flores_lang)
 
     del translator
