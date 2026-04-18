@@ -8,7 +8,7 @@ Single entry point for the full outreach report pipeline:
       → speaker diarization    [pipeline/diarization/pyannote_diarizer.py]
     → ASR transcription      [pipeline/asr/indic_conformer.py]
       → structured transcript  [pipeline/transcript/builder.py]
-      → translation            [pipeline/translation/sarvam_translate.py]
+      → translation            [pipeline/translation/indictrans2.py]
       → extraction & insights  [pipeline/extraction/*]
       → assemble & save        [pipeline/report/assembler.py]
 
@@ -164,10 +164,8 @@ async def run_extraction(entries: list[dict], flores_lang: str) -> dict:
     # metadata = metadata_extractor.extract(narration["narration"], use_llm=True)
     metadata = await metadata_extractor.extract(entries, use_llm=True)
 
-    # Do not treat extracted participant profiles as actual attendance counts.
-    metadata["farmers_attended_total"] = None
-    metadata["female_farmers_count"] = None
-    metadata["male_farmers_count"] = None
+    # NOTE: farmer counts are extracted from the transcript by the LLM.
+    # Do NOT null them here — let the PDF show the extracted values.
 
     # final_summary = await summary_gen.generate(
     #     participants = participants,

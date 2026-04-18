@@ -27,7 +27,7 @@ The original pipeline used **IndicConformer** for ASR and **IndicTrans2** for tr
 | Component | Original | Current |
 |-----------|----------|---------|
 | ASR Model | `IndicConformer` (gated HuggingFace, complex setup) | `OpenAI Whisper large-v3` (pip install, no gated access) |
-| Translation | `IndicTrans2` | `ai4bharat/indictrans2-indic-en-1B` (free, open-source, Indic-optimised) |
+| Translation | `sarvamai/sarvam-translate` (paid, gated) | `ai4bharat/indictrans2-indic-en-1B` (free, open-source, Indic-optimised) |
 | Audio loading | `torchaudio` (broken with PyTorch 2.9.1+) | `pydub` + `soundfile` |
 | Audio saving | `torchaudio.save` (torchcodec incompatible) | `soundfile.write` |
 | Diarization input | File path | Preloaded waveform tensor (bypasses torchcodec) |
@@ -245,7 +245,14 @@ All outputs are saved to `--output_dir` (default: `./outputs`):
 |------|-------------|
 | `combined.wav` | Merged and normalized input audio |
 | `transcript_raw.json` | Speaker-diarized Whisper transcript in source language |
-| `transcript_translated.json` | English-translated transcript |
+| `transcript_translated.json` | English-translated transcript (IndicTrans2) |
+| `outreach_report.json` | Master report JSON with all extracted fields |
+| `meeting_metadata.json` | Structured meeting metadata (date, location, counts, …) |
+| `meeting_conclusion.json` | LLM-generated conclusion |
+| `farmer_questions.json` | Extracted farmer questions |
+| `farmer_challenges.json` | Extracted farmer challenges grouped by category |
+| `participant_report.json` | Extracted participant list |
+| `terminology_output.json` | Domain terminology extracted from session |
 | `outreach_report.pdf` | Final assembled PDF report (unless `--no_pdf`) |
 
 ---

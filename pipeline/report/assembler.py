@@ -70,8 +70,11 @@ def save(report: Dict, output_dir: str, export_pdf: bool = True) -> str:
             from pipeline.report.exporter import PDFReportGenerator
             pdf_path = os.path.join(output_dir, "outreach_report.pdf")
             PDFReportGenerator().create_report(report, pdf_path)
-            log.info(f"PDF report saved: {pdf_path}")
+            if not os.path.exists(pdf_path):
+                log.warning("PDF export completed without error but output file not found: %s", pdf_path)
+            else:
+                log.info(f"PDF report saved: {pdf_path}")
         except Exception:
-            log.exception("PDF export failed.")
+            log.exception("PDF export failed — JSON outputs are still valid.")
 
     return master_path

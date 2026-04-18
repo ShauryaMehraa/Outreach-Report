@@ -40,7 +40,10 @@ class NarrationGenerator(BaseLLM):
     def _get_initial_transcript(self, entries: List[Dict], max_chars: int) -> str:
         lines, total = [], 0
         for e in entries:
-            text = (e.get("original_text") or e.get("translated_text") or e.get("text") or "").strip()
+            # Prefer the English translation when available; fall back to the
+            # original Indic text so Sarvam-style runs (no translated_text key)
+            # still produce a usable transcript for the LLM.
+            text = (e.get("translated_text") or e.get("original_text") or e.get("text") or "").strip()
             if not text:
                 continue
             if total + len(text) > max_chars:

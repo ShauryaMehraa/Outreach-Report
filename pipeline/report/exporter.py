@@ -5,7 +5,7 @@ Generates a formatted PDF report from the assembled report dict.
 
 Expected report dict shape (from pipeline/report/assembler.py):
 {
-    "summary":          str,
+    "conclusion":       str,
     "narration":        {"summary": str, "narration": str},
     "terminology":      [{"Crop": "", "Local Name": "", "Standard Name": "",
                           "Scientific Name": "", "Language": ""}, ...],
@@ -584,7 +584,10 @@ class PDFReportGenerator:
         narration_content = []
         
         if narration_text:
-            narration_content.append(Paragraph("<b>Translation / Dictation:</b>", styles["Heading4"]))
+            narration_content.append(Paragraph(
+                f"<b>{_escape_for_para('Translation / Dictation:')}</b>",
+                styles["Heading4"],
+            ))
         
             # IMPORTANT: build many Paragraphs (many rows) so the box can split
             narr_clean = strip_markdown(narration_text)
@@ -594,7 +597,10 @@ class PDFReportGenerator:
         
         if summary_text:
             narration_content.append(Spacer(1, 8))
-            narration_content.append(Paragraph("<b>Summary:</b>", styles["Heading4"]))
+            narration_content.append(Paragraph(
+                f"<b>{_escape_for_para('Summary:')}</b>",
+                styles["Heading4"],
+            ))
             narration_content.extend(paragraphize_long_text(strip_markdown(summary_text), body_style, max_chunk_chars=900))
         
         story.append(self._boxed_body_splittable(narration_content))

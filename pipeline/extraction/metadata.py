@@ -166,7 +166,7 @@ def weekday_from_date(date_str: Optional[str]) -> Optional[str]:
     except Exception:
         return None
 
-def pick_relevant_window(text: str, window: int = 7500) -> str:
+def pick_relevant_window(text: str, window: int = 9000) -> str:
     """
     Metadata usually appears near the beginning. Keep a window that includes
     the start + any explicit "metadata / details" section if present.
@@ -192,6 +192,15 @@ def pick_relevant_window(text: str, window: int = 7500) -> str:
             start = max(0, m.start() - 1200)
             return t[start : start + window]
     return t[:window]
+
+
+def pick_tail_window(text: str, window: int = 3000) -> str:
+    """
+    Return the last `window` characters of the transcript.
+    Metadata (totals, coordinator sign-off) sometimes appears only at the end.
+    """
+    t = (text or "").strip()
+    return t[-window:] if len(t) > window else t
 
 # ---------------------------------------------------------------------
 # Fallback regex (fills only missing keys)
@@ -429,29 +438,41 @@ class MetadataExtractor(BaseLLM):
             transcript = format_transcript(entries)
 
         window = pick_relevant_window(transcript, window=9000)
+        tail   = pick_tail_window(transcript, window=3000)
+
+        # Combine start window + tail to catch metadata that only appears at end.
+        # De-duplicate: if transcript is short the two may overlap.
+        if tail and tail not in window:
+            combined_window = window + "\n" + tail
+        else:
+            combined_window = window
 
         # IMPORTANT: seed "current" with the schema so LLM keeps exact keys
         llm_meta = dict(SCHEMA)
 
         if use_llm:
-            llm_meta = self._extract_llm(window, current=llm_meta)
+            llm_meta = self._extract_llm(combined_window, current=llm_meta)
 
-        llm_meta = postprocess_metadata(llm_meta, evidence_text=window)
+        # First postprocess: normalise + derive fields from the LLM result.
+        llm_meta = postprocess_metadata(llm_meta, evidence_text=combined_window)
 
-        # fallback regex fills only missing keys
-        regex_meta = extract_meta_regex(window)
+        # Fallback regex fills only keys still missing after LLM + first postprocess.
+        regex_meta = extract_meta_regex(combined_window)
         for k, v in regex_meta.items():
             if llm_meta.get(k) in (None, "", []):
                 llm_meta[k] = v
 
-        llm_meta = postprocess_metadata(llm_meta, evidence_text=window)
+        # Second postprocess: re-run normalisation on anything the regex just filled
+        # (e.g. raw phone strings, unformatted dates) and re-derive computed fields
+        # such as day-of-week and gender counts that depend on the now-complete data.
+        llm_meta = postprocess_metadata(llm_meta, evidence_text=combined_window)
         return llm_meta
 
     def _extract_llm(self, text: str, current: Dict[str, Any]) -> Dict[str, Any]:
         prompt = build_fill_prompt(text, current=current)
 
         messages = [{"role": "user", "content": prompt}]
-        decoded = self._run_inference(messages, max_new_tokens=550)
+        decoded = self._run_inference(messages, max_new_tokens=750)
 
         # Always coerce to schema keys
         return self._safe_json(decoded, dict(SCHEMA))

@@ -13,7 +13,11 @@ import torch
 from rapidfuzz import fuzz
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-MODEL_ID = "/models/huggingface/models--mistralai--Mistral-7B-Instruct-v0.3/snapshots/c170c708c41dac9275d15a8fff4eca08d52bab71"
+# Allow the model path to be overridden via environment variable so the same
+# code works both on the shared JupyterHub server (global cache) and on a
+# personal machine where the model is stored elsewhere.
+_DEFAULT_MODEL_PATH = "/models/huggingface/models--mistralai--Mistral-7B-Instruct-v0.3/snapshots/c170c708c41dac9275d15a8fff4eca08d52bab71"
+MODEL_ID = os.getenv("LLM_MODEL_PATH", _DEFAULT_MODEL_PATH)
 log = logging.getLogger(__name__)
 
 
@@ -43,6 +47,13 @@ class BaseLLM:
         max_new_tokens: int = 800
     ) -> str:
         """Tokenize messages, generate, and return only the new decoded tokens."""
+        # Guard against objects created via __new__ (weight-sharing pattern) that
+        # somehow never had _share_model() called on them.
+        if not hasattr(self, "model") or not hasattr(self, "tokenizer") or not hasattr(self, "device"):
+            raise AttributeError(
+                f"{type(self).__name__} was instantiated without model weights. "
+                "Call _share_model(source, target) before using this instance."
+            )
         tokenized = self.tokenizer.apply_chat_template(
             messages,
             return_tensors="pt",
@@ -81,6 +92,7 @@ class BaseLLM:
                 return json.loads(match.group())
             except json.JSONDecodeError:
                 pass
+        log.warning("LLM JSON parse failed; using fallback schema. Raw output: %.200s", text)
         return fallback
 
     def _safe_parse_list(self, text: str) -> List[str]:
