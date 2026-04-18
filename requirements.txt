@@ -36,7 +36,6 @@ humanfriendly==10.0
 idna==3.11
 importlib_metadata==8.7.1
 indic_transliteration==2.3.79
-IndicTransToolkit==1.1.1
 Jinja2==3.1.6
 joblib==1.5.3
 jsonschema==4.26.0
